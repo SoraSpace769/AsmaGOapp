@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 
+
+
 def welcome(request):
     # Si estamos identificados devolvemos la portada
     if request.user.is_authenticated:
@@ -41,6 +43,8 @@ def login(request):
 def logout(request):
     # Redireccionamos a la portada
     return redirect('/')
+
+
 
     # Si queremos borramos los campos de ayuda
 form.fields['username'].help_text = None
