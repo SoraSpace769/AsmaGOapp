@@ -1,0 +1,90 @@
+
+{% extends 'base_template.html' %}
+
+{% block title %}
+Add Data Page
+{% endblock title %}
+
+{% block custom_css %}
+<style>
+.bg_blue{
+padding:10px;
+border-radius:10px;
+box-shadow:3px 3px 3px grey;
+background:dodgerblue;
+color:#fff;
+}
+.custom-block{
+padding:15px;
+border:1px solid dodgerblue;
+}
+</style>
+{% endblock custom_css %}
+
+{% block bodydata %}
+<div class="container">
+    <div class="row">
+    <div class="col-lg-6 custom-block">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="bg_blue">Add Students</h2>
+            </div>
+            <div class="col-lg-12">
+                <form action="/add_student" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label">Nombre : </label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Curso : </label>
+                    <input type="text" name="curso" class="form-control">
+                </div>
+                  <div class="form-group">
+                    <label class="control-label">Establecimiento : </label>
+                    <input type="text" name="colegio" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Velocidad : </label>
+                    <input type="text" name="velocidad" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Resistencia : </label>
+                    <input type="text" name="resistencia" class="form-control">
+                </div>
+                 <div class="subject-div">
+
+                 </div>
+                 <div class="form-group">
+                     <div class="row">
+                         <div class="col-lg-6">
+                             <button class="add_subject btn btn-block btn-info" type="button">Add Subject</button>
+                         </div>
+                         <div class="col-lg-6">
+                             <button class="remove_subject btn btn-block btn-danger" type="button">Remove Subject</button>
+                         </div>
+                     </div>
+                 </div>
+                <div class="form-group">
+                    <input type="submit" name="submit" class="btn btn-block btn-success" value="Add Students">
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+             {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert alert-success">{{ message }}</div>
+                        {% elif message.tags == 'error' %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+             {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock bodydata %}
+
