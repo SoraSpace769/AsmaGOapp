@@ -120,88 +120,17 @@
 
 # -------------------------------------------------------------------------------------------
 
-# import json
-
-# from django.http import HttpResponse, JsonResponse
-# from django.shortcuts import render
-
-# # Create your views here.
-# from django.views.decorators.csrf import csrf_exempt
-
-# from AsmaGOwebapp.models import Students
-
-
-# def HomePage(request):
-#     students=Students.objects.all()
-#     return render(request,"home_page.html",{"students":students})
-
-
-# @csrf_exempt
-# def InsertStudent(request):
-#     name=request.POST.get("name")
-#     curso=request.POST.get("curso")
-#     colegio=request.POST.get("colegio")
-#     sintomas_diurnos=request.POST.get("sintomas_diurnos")
-#     medicacion=request.POST.get("medicacion")
-#     sintomas_nocturnos=request.POST.get("sintomas_nocturnos")
-#     ataques=request.POST.get("ataques")
-   
-#     try:
-#         student=Students(name=name,curso=curso,colegio=colegio,sintomas_diurnos=sintomas_diurnos,medicacion=medicacion,sintomas_nocturnos=sintomas_nocturnos,ataques=ataques)
-#         student.save()
-#         student_data={"id":student.id,"created_at":student.created_at,"error":False,"errorMessage":"Student Added Successfully"}
-#         return JsonResponse(student_data,safe=False)
-#     except:
-#         student_data={"error":True,"errorMessage":"Failed to Add Student"}
-#         return JsonResponse(student_data,safe=False)
-
-# @csrf_exempt
-# def update_all(request):
-#     data=request.POST.get("data")
-#     dict_data=json.loads(data)
-#     try:
-#         for dic_single in dict_data:
-#             student=Students.objects.get(id=dic_single['id'])
-#             student.name=dic_single['name']
-#             student.curso=dic_single['curso']
-#             student.colegio=dic_single['colegio']
-#             student.sintomas_diurnos=dic_single['sintomas_diurnos']
-#             student.medicacion=dic_single['medicacion']
-#             student.sintomas_nocturnos=dic_single['sintomas_nocturnos']
-#             student.ataques=dic_single['ataques']
-#             student.save()
-#         student_data={"error":False,"errorMessage":"Updated Successfully"}
-#         return JsonResponse(student_data,safe=False)
-#     except:
-#         student_data={"error":True,"errorMessage":"Failed to Update Data"}
-#         return JsonResponse(student_data,safe=False)
-
-# @csrf_exempt
-# def delete_data(request):
-#     id=request.POST.get("id")
-#     try:
-#         student=Students.objects.get(id=id)
-#         student.delete()
-#         student_data={"error":False,"errorMessage":"Deleted Successfully"}
-#         return JsonResponse(student_data,safe=False)
-#     except:
-#         student_data={"error":True,"errorMessage":"Failed to Delete Data"}
-#         return JsonResponse(student_data,safe=False)
-
-
-
-
-# -----------------------------------------------------------------------------
 
 import json
 
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
-
-# Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-
 from AsmaGOwebapp.models import StudentData
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def HomePage(request):
@@ -268,3 +197,54 @@ def exercises(request,student_id):
         return render(request,"ejercicios.html")
     else:
         return HttpResponse("ola")
+
+def LoginUser(request):
+    #print(settings.SECRET_KEY)
+    if request.user==None or request.user =="" or request.user.username=="":
+        return render(request,"login_page.html")
+    else:
+        return render(request,"home_page.html")
+
+def RegisterUser(request):
+    # if request.user==None:
+        return render(request,"register_page.html")
+    # else:
+        # return HttpResponseRedirect("/homePage")
+
+def SaveUser(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        username=request.POST.get('username','')
+        email=request.POST.get('email','')
+        password=request.POST.get('password','')
+
+        if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
+            User.objects.create_user(username,email,password)
+            messages.success(request,"User Created Successfully")
+            return HttpResponseRedirect('register')
+        else:
+            messages.error(request,"Email or Username Already Exist")
+            return HttpResponseRedirect('register')
+
+def DoLoginUser(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed")
+    else:
+        username=request.POST.get('username','')
+        password=request.POST.get('password','')
+
+        user=authenticate(username=username,password=password)
+
+        if user!=None:
+            login(request,user)
+            return HttpResponseRedirect('')
+        else:
+            messages.error(request,"Invalid Login Details")
+            return HttpResponseRedirect('/login_user')
+
+
+def LogoutUser(request):
+    logout(request)
+    request.user=None
+    return HttpResponseRedirect("/login_user")

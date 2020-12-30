@@ -50,4 +50,9 @@ urlpatterns = [
     path('update_all', views.update_all,name="update_all"),
     path('delete_data', views.delete_data,name="delete_data"),
     path('exercises/<str:student_id>',views.exercises,name='exercises'),
+    path('register/',views.RegisterUser,name="register"),
+    path('login_user/', views.LoginUser, name="login_user"),
+    path('save_user',views.SaveUser,name="save_user"),
+    path('do_loginn_user',views.DoLoginUser,name="do_login_user"),
+    path('logout/',views.LogoutUser,name="logout"),
 ]
