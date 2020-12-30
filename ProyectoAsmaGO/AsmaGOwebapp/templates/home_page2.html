@@ -1,0 +1,390 @@
+<html>
+<head>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<div class="container">
+    <div class="row form-group" style="margin-top:30px;">
+        <div class="col-lg-6">
+            <button class="btn btn-block btn-success" id="insert_btn" data-toggle="modal" data-target="#insert_data">INSERT</button>
+        </div>
+        <div class="col-lg-6">
+            <button class="btn btn-block btn-success" id="update_btn">EDIT ALL</button>
+            <button class="btn btn-block btn-success" id="save_all_btn" style="display:none;margin-top:0px">SAVE ALL</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+              <div class="alert alert-success" id="upt_success" style="display:none">
+
+              </div>
+               <div class="alert alert-danger" id="upt_error" style="display:none">
+
+              </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <!-- <th>ID</th> -->
+                        <th>Nombre</th>
+                        <th>Curso</th>
+                        <th>Establecimiento</th>
+                        <th>Síntomas Diurnos</th>
+                        <th>Medicación</th>
+                        <th>Síntomas Nocturnos</th>
+                        <th>Ataques de Asma</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                        <th>Ejercicio</th>
+                    </tr>
+                    </thead>
+
+
+                    
+                    <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <!-- <td>{{ student.id }}</td> -->
+                        <td class="editable" data-type="name">{{ student.name }}</td>
+                        <td class="editable" data-type="curso">{{ student.curso }}</td>
+                        <td class="editable" data-type="colegio">{{ student.colegio }}</td>
+                        <td class="editable" data-type="sintomas_diurnos">{{ student.sintomas_diurnos }}</td>
+                        <td class="editable" data-type="medicacion">{{ student.medicacion }}</td>
+                        <td class="editable" data-type="sintomas_nocturnos">{{ student.sintomas_nocturnos }}</td>
+                        <td class="editable" data-type="ataques">{{ student.ataques }}</td>
+                        <td>{{ student.created_at }}</td>
+                        <td class="btn-td-block"><button class="btn btn-block btn-delete btn-danger">DELETE</button></td>
+                        <td><a href="exercises/{{student.id}}" class="btn btn-success">Crear Rutina</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="insert_data" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Insert Student</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+
+          <div class="form-group">
+              <label>Nombre : </label>
+              <input type="text" name="name" id="ins_name" class="form-control" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+              <label>Curso : </label>
+              <input type="text" name="curso" id="ins_curso" class="form-control" placeholder="Curso">
+          </div>
+          <div class="form-group">
+            <label>Establecimiento : </label>
+            <input type="text" name="colegio id="ins_oolegio" class="form-control" placeholder="Establecimiento">
+        </div>
+
+           <div class="form-group">
+              <label>Síntomas Diurnos (veces/semana): </label>
+              <select name="sintomas_diurnos" class="form-control" id="ins_sintomas_diurnos">
+                  <option>Menos de 2 veces/semana</option>
+                  <option>Más de 2 veces/semana</option>
+                  <option>Al menos una vez al día</option>
+                  <option>Varias veces al día</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label>Medicación (veces/semana): </label>
+            <select name="medicacion" class="form-control" id="ins_medicacion">
+                <option>Menos de 2 veces/semana</option>
+                <option>Más de 2 veces/semana</option>
+                <option>Al menos una vez al día</option>
+                <option>Varias veces al día</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Síntomas Nocturnos (veces/semana): </label>
+            <select name="sintomas_nocturnos" class="form-control" id="ins_sintomas_nocturnos">
+                <option>Menos de 2 veces/mes</option>
+                <option>Más de 2 veces/mes</option>
+                <option>Más de una vez/semana</option>
+                <option>Frecuentemente</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Ataques de Asma (veces/semana): </label>
+            <select name="ataques" class="form-control" id="ins_ataques">
+                <option>Nunca</option>
+                <option>Menos de una vez/año</option>
+                <option>Más de dos veces/año</option>
+            </select>
+        </div>
+
+
+          <div class="form-group">
+              <input type="button" name="submit" class="btn btn-block btn-info btn-insert-data" value="INSERT STUDENT">
+          </div>
+          <div class="form-group">
+              <div class="alert alert-success" id="ins_success" style="display:none">
+
+              </div>
+               <div class="alert alert-danger" id="ins_error" style="display:none">
+
+              </div>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+    $(".btn-insert-data").click(function(){
+
+        var name=$("#ins_name").val();
+        var email=$("#ins_curso").val();
+        var colegio=$("#ins_colegio").val();
+        var sintomas_diurnos=$("#ins_sintomas_diurnos").val();
+        var medicacion=$("#ins_medicacion").val();
+        var sintomas_nocturnos=$("#ins_sintomas_diurnos").val();
+        var ataques=$("#ins_ataques").val();
+        if(name==""){
+            $("#ins_error").text("Por favor Ingrese un Nombre")
+            $("#ins_error").show()
+            return;
+        }
+        else if(curso==""){
+            $("#ins_error").text("Por favor Ingrese un Curso")
+            $("#ins_error").show()
+            return;
+        }
+        else if(colegio==""){
+            $("#ins_error").text("Por favor Ingrese un Establecimiento")
+            $("#ins_error").show()
+            return;
+        }
+        else{
+                $(".btn-insert-data").attr("disabled","disabled");
+                $(".btn-insert-data").text("Inserting... Please Wait..");
+            $.ajax({
+                url:'{% url 'insert' %}',
+                type:'POST',
+                data:{name:name,curso:curso,colegio:colegio,sintomas_diurnos:sintomas_diurnos,medicacion:medicacion,sintomas_nocturnos:sintomas_nocturnos,ataques:ataques}
+            })
+            .done(function(response){
+                if(response['error']==false){
+                    $("#ins_error").hide();
+                    $("#ins_success").text(response['errorMessage']);
+                    $("#ins_success").show();
+                    var html_data="<tr><td>"+response['id']+"</td><td class='editable' data-type='name'>"+name+"</td><td class='editable' data-type='curso'>"+curso+"</td><td class='editable' data-type='colegio'>"+colegio+"</td><td class='editable' data-type='sintomas_diurnos'>"+sintomas_diurnos+"</td><td class='editable' data-type='medicacion'>"+medicacion+"</td><td class='editable' data-type='sintomas_nocturnos'>"+sintomas_nocturnos+"</td><td class='editable' data-type='ataques'>"+ataques+"</td><td>"+response['created_at']+"</td><td class='btn-td-block'><button class='btn btn-block btn-delete btn-danger'>DELETE</button></td></tr>";
+                    $(".table tbody").append(html_data);
+                }
+                else{
+                    $("#ins_success").hide();
+                    $("#ins_error").text(response['errorMessage']);
+                    $("#ins_error").show();
+                }
+            })
+            .fail(function(){
+                 $("#ins_success").hide();
+                 $("#ins_error").text("Something Went Wrong!");
+                 $("#ins_error").show();
+            })
+            .always(function(){
+                $(".btn-insert-data").removeAttr("disabled");
+                $(".btn-insert-data").text("INSERT STUDENT");
+            })
+        }
+    })
+
+    $("#update_btn").click(function(){
+            $("#update_btn").hide();
+            $("#save_all_btn").show();
+
+       $(".editable").each(function(){
+           var value=$(this).text();
+           var types=$(this).data('type');
+           if(types!='sintomas_diurnos' && types!='medicacion' && types!= 'sintomas_nocturnos' && types!= 'ataques'){
+                var html_data="<input type='text' name='"+types+"'  class='form-control input_"+types+" input_data' value='"+value+"'>";
+                $(this).html(html_data);
+           }
+           else if (types=='sintomas_diurnos'){
+                var html_data="<select name='"+types+"'  class='form-control input_"+types+" input_data'>";
+                if(value=="Menos de 2 veces/semana"){
+                    html_data+="<option selected>Menos de 2 veces/semana</option><option>Más de 2 veces/semana</option><option>Al menos una vez al día</option><option>Varias veces al día</option>";
+                }
+                else if(value=="Más de 2 veces/semana"){
+                    html_data+="<option>Menos de 2 veces/semana</option><option selected>Más de 2 veces/semana</option><option>Al menos una vez al día</option><option>Varias veces al día</option>";
+                }
+                else if(value=="Al menos una vez al día"){
+                    html_data+="<option>Menos de 2 veces/semana</option><option>Más de 2 veces/semana</option><option selected>Al menos una vez al día</option><option>Varias veces al día</option>";
+                }
+                else if(value=="Varias veces al día"){
+                    html_data+="<option>Menos de 2 veces/semana</option><option>Más de 2 veces/semana</option><option>Al menos una vez al día</option><option selected>Varias veces al día</option>";
+                }
+                html_data+="</select>";
+                $(this).html(html_data);
+           }
+           else if (types=='medicacion'){
+                var html_data="<select name='"+types+"'  class='form-control input_"+types+" input_data'>";
+                if(value=="Menos de 2 veces/semana"){
+                    html_data+="<option selected>Menos de 2 veces/semana</option><option>Más de 2 veces/semana</option><option>Al menos una vez al día</option><option>Varias veces al día</option>";
+                }
+                else if(value=="Más de 2 veces/semana"){
+                    html_data+="<option>Menos de 2 veces/semana</option><option selected>Más de 2 veces/semana</option><option>Al menos una vez al día</option><option>Varias veces al día</option>";
+                }
+                else if(value=="Al menos una vez al día"){
+                    html_data+="<option>Menos de 2 veces/semana</option><option>Más de 2 veces/semana</option><option selected>Al menos una vez al día</option><option>Varias veces al día</option>";
+                }
+                else if(value=="Varias veces al día"){
+                    html_data+="<option>Menos de 2 veces/semana</option><option>Más de 2 veces/semana</option><option>Al menos una vez al día</option><option selected>Varias veces al día</option>";
+                }
+                html_data+="</select>";
+                $(this).html(html_data);
+           }
+           else if (types=='sintomas_nocturnos'){
+                var html_data="<select name='"+types+"'  class='form-control input_"+types+" input_data'>";
+                if(value=="Menos de 2 veces/mes"){
+                    html_data+="<option selected>Menos de 2 veces/mes</option><option>Más de 2 veces/mes</option><option>Más de una vez/semana</option><option>Frecuentemente</option>";
+                }
+                else if(value=="Más de 2 veces/mes"){
+                    html_data+="<option>Menos de 2 veces/mes</option><option selected>Más de 2 veces/mes</option><option>Más de una vez/semana</option><option>Frecuentemente</option>";
+                }
+                else if(value=="Más de una vez/semana"){
+                    html_data+="<option selected>Menos de 2 veces/mes</option><option>Más de 2 veces/mes</option><option selected>Más de una vez/semana</option><option>Frecuentemente</option>";
+                }
+                else if(value=="Frecuentemente"){
+                    html_data+="<option selected>Menos de 2 veces/mes</option><option>Más de 2 veces/mes</option><option>Más de una vez/semana</option><option selected>Frecuentemente</option>";
+                }
+                html_data+="</select>";
+                $(this).html(html_data);
+           }
+           else if (types=='ataques'){
+                var html_data="<select name='"+types+"'  class='form-control input_"+types+" input_data'>";
+                if(value=="Nunca"){
+                    html_data+="<option selected>Nunca</option><option>Menos de una vez/año</option><option>Más de una vez/año</option>";
+                }
+                else if(value=="Menos de una vez/año"){
+                    html_data+="<option>Nunca</option><option selected>Menos de una vez/año</option><option>Más de una vez/año</option>";
+                }
+                else if(value=="Más de una vez/año"){
+                    html_data+="<option>Nunca</option><option>Menos de una vez/año</option><option selected>Más de una vez/año</option>";
+                }
+                html_data+="</select>";
+                $(this).html(html_data);
+           }
+        });
+    });
+
+    $("#save_all_btn").click(function(){
+        $("#save_all_btn").attr("disabled","disabled");
+        $("#save_all_btn").text("Saving Data....");
+
+        var json_data=[];
+        $(".input_data").each(function(){
+                var value=$(this).val();
+                var parent_html=$(this).parent();
+                parent_html.html(value);
+                $(this).remove();
+         });
+        $("tbody tr").each(function(){
+            // var id=$(this).children().eq(0).text()
+             var name=$(this).children().eq(0).text()
+             var curso=$(this).children().eq(1).text()
+             var colegio=$(this).children().eq(2).text()
+             var sintomas_diurnos=$(this).children().eq(3).text()
+             var medicacion=$(this).children().eq(4).text()
+             var sintomas_nocturnos=$(this).children().eq(5).text()
+             var ataques=$(this).children().eq(6).text()
+
+             var single_data={"name":name,"curso":curso,"colegio":colegio,"sintomas_diurnos":sintomas_diurnos,"medicacion":medicacion,"sintomas_nocturnos":sintomas_nocturnos,"ataques":ataques};
+             json_data.push(single_data);
+        });
+
+        var string_data=JSON.stringify(json_data)
+        $.ajax({
+                url:'{% url 'update_all' %}',
+                type:'POST',
+                data:{data:string_data}
+            })
+            .done(function(response){
+                if(response['error']==false){
+                    $("#upt_error").hide();
+                    $("#upt_success").text(response['errorMessage']);
+                    $("#upt_success").show();
+
+                }
+                else{
+                    $("#upt_success").hide();
+                    $("#upt_error").text(response['errorMessage']);
+                    $("#upt_error").show();
+                }
+            })
+            .fail(function(){
+                 $("#upt_success").hide();
+                 $("#upt_error").text("Something Went Wrong!");
+                 $("#upt_error").show();
+            })
+            .always(function(){
+                 $("#save_all_btn").removeAttr("disabled");
+                 $("#save_all_btn").text("SAVE ALL");
+                 $("#update_btn").show();
+                 $("#save_all_btn").hide();
+            })
+
+    });
+
+    $(document).on("click",".btn-delete",function(){
+            var this_html=$(this);
+            this_html.attr("disabled","disabled");
+            this_html.text("DELETING....");
+            var id=this_html.parent().parent().children().first().text();
+            //console.log(id);
+            $.ajax({
+                url:'{% url 'delete_data' %}',
+                type:'POST',
+                data:{id:id}
+            })
+            .done(function(response){
+                if(response['error']==false){
+                    this_html.parent().parent().remove();
+                    $("#upt_error").hide();
+                    $("#upt_success").text(response['errorMessage']);
+                    $("#upt_success").show();
+
+                }
+                else{
+                    $("#upt_success").hide();
+                    $("#upt_error").text(response['errorMessage']);
+                    $("#upt_error").show();
+                }
+            })
+            .fail(function(){
+                 $("#upt_success").hide();
+                 $("#upt_error").text("Something Went Wrong!");
+                 $("#upt_error").show();
+            });
+    });
+</script>
+</body>
+</html>
