@@ -15,9 +15,10 @@ from django.contrib.auth.decorators import login_required
 def IndexPageController(request):
     return HttpResponseRedirect("/homePage")
 
-# @login_required(login_url='/login_user/')
+@login_required(login_url='/login_user/')
 def HomePage(request):
-    return render(request,"home_page.html")
+    students=StudentData.objects.all()
+    return render(request,"home_page.html",{"students":students})
 
 @csrf_exempt
 def InsertStudent(request):
@@ -69,16 +70,6 @@ def delete_data(request):
         stuent_data={"error":True,"errorMessage":"Failed to Delete Data"}
         return JsonResponse(stuent_data,safe=False)
 
-
-# @login_required(login_url='/login_user/')
-def exercises(request,student_id):
-    student=StudentData.objects.get(id=student_id)
-    
-    if student.sintomas_diurnos == 'Menos de 2 veces/semana':
-        return render(request,"ejercicios.html")
-    else:
-        return HttpResponse("ola")
-
 def LoginUser(request):
   
     if request.user==None or request.user =="" or request.user.username=="":
@@ -116,8 +107,11 @@ def DoLoginUser(request):
         password=request.POST.get('password','')
         user=authenticate(username=username,password=password)
         login(request,user)
-        if user!=None:
-            
+        if user == None:
+            messages.success(request,"Error al ingresar")
+            return HttpResponseRedirect('/login_user')
+        elif user!=None:
+
             return HttpResponseRedirect('/homePage')
         else:
             messages.error(request,"Invalid Login Details")
@@ -127,3 +121,22 @@ def LogoutUser(request):
     logout(request)
     request.user=None
     return HttpResponseRedirect("/login_user")
+
+@login_required(login_url='/login_user/')
+def exercises(request,student_id):
+    student=StudentData.objects.get(id=student_id)
+    
+    if student.sintomas_nocturnos == 'Frecuentemente' and student.ataques == 'Más de una vez/año':
+        return render(request,"rutina_grave.html")
+    elif student.sintomas_diurnos == 'Menos de 2 veces/semana' and student.medicacion == 'Menos de 2 veces/semana'\
+         and student.sintomas_nocturnos == 'Menos de 2 veces/mes':
+         return render(request,"rutina_intermitente.html")
+    elif student.sintomas_diurnos == 'Más de 2 veces/semana' and student.medicacion == 'Más de 2 veces/semana'\
+         and student.sintomas_nocturnos == 'Más de 2 veces/mes':
+         return render(request,"rutina_leve.html")
+    elif student.sintomas_diurnos == 'Al menos una vez al día' and student.medicacion == 'Al menos una vez al día'\
+         and student.sintomas_nocturnos == 'Más de una vez/semana':
+         return render(request,"rutina_moderado.html")
+
+    else:
+        return HttpResponse("ola")

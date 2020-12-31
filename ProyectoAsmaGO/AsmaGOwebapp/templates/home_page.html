@@ -12,11 +12,11 @@
 <div class="container">
     <div class="row form-group" style="margin-top:30px;">
         <div class="col-lg-6">
-            <button class="btn btn-block btn-success" id="insert_btn" data-toggle="modal" data-target="#insert_data">INSERT</button>
+            <button class="btn btn-block btn-success" id="insert_btn" data-toggle="modal" data-target="#insert_data">Insertar Estudiante</button>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-block btn-success" id="update_btn">EDIT ALL</button>
-            <button class="btn btn-block btn-success" id="save_all_btn" style="display:none;margin-top:0px">SAVE ALL</button>
+            <button class="btn btn-block btn-success" id="update_btn">Editar Todos</button>
+            <button class="btn btn-block btn-success" id="save_all_btn" style="display:none;margin-top:0px">Guardar Todos</button>
             
         </div>
     </div>
@@ -45,7 +45,7 @@
                         <th>Síntomas Nocturnos</th>
                         <th>Ataques de Asma</th>
                         <!-- <th>Created At</th> -->
-                        <th>Action</th>
+                        <th>Acción</th>
                         <th>Ejercicio</th>
                     </tr>
                     </thead>
@@ -62,7 +62,7 @@
                         <td class="editable" data-type="ataques">{{ student.ataques }}</td>
                         <!-- <td>{{ student.created_at }}</td> -->
                         <td class="btn-td-block"><button class="btn btn-block btn-delete btn-danger">DELETE</button></td>
-                        <td><a href="exercises/{{student.id}}/" class="btn btn-success" id="rutina_btn">Crear Rutina</a></td>
+                        <td><a href="/exercises/{{student.id}}" class="btn btn-success" id="rutina_btn">Crear Rutina</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -82,7 +82,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title">Insert Student</h4>
+        <h4 class="modal-title">Insertar Estudiante</h4>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -190,7 +190,7 @@
                     $("#ins_error").hide();
                     $("#ins_success").text(response['errorMessage']);
                     $("#ins_success").show();
-                    var html_data="<tr><td>"+response['id']+"</td><td class='editable' data-type='name'>"+name+"</td><td class='editable' data-type= 'curso'>"+curso+"</td><td class='editable' data-type= 'colegio'>"+colegio+"</td><td class='editable' data-type='sintomas_diurnos'>"+sintomas_diurnos+"</td><td class='editable' data-type='medicacion'>"+medicacion+"</td><td class='editable' data-type='sintomas_nocturnos'>"+sintomas_nocturnos+"</td><td class='editable' data-type='ataques'>"+ataques+"</td><td class='btn-td-block'><button class='btn btn-block btn-delete btn-danger'>DELETE</button></td><td><a href='exercises/{{student.id}}' class= 'btn btn-success' id='rutina_btn'>Crear Rutina</a></td>";
+                    var html_data="<tr><td>"+response['id']+"</td><td class='editable' data-type='name'>"+name+"</td><td class='editable' data-type= 'curso'>"+curso+"</td><td class='editable' data-type= 'colegio'>"+colegio+"</td><td class='editable' data-type='sintomas_diurnos'>"+sintomas_diurnos+"</td><td class='editable' data-type='medicacion'>"+medicacion+"</td><td class='editable' data-type='sintomas_nocturnos'>"+sintomas_nocturnos+"</td><td class='editable' data-type='ataques'>"+ataques+"</td><td class='btn-td-block'><button class='btn btn-block btn-delete btn-danger'>DELETE</button></td><td><a href='/exercises/{{student.id}}' class= 'btn btn-success' id='rutina_btn'>Crear Rutina</a></td>";
                     $(".table tbody").append(html_data);
                 }
                 else{

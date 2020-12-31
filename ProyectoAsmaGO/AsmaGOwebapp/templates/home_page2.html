@@ -1,3 +1,4 @@
+
 <html>
 <head>
 
@@ -34,26 +35,23 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <!-- <th>ID</th> -->
-                        <th>Nombre</th>
+                        <th>ID</th>
+                        <th>Name</th>
                         <th>Curso</th>
                         <th>Establecimiento</th>
                         <th>Síntomas Diurnos</th>
                         <th>Medicación</th>
                         <th>Síntomas Nocturnos</th>
                         <th>Ataques de Asma</th>
-                        <th>Created At</th>
+                        <!-- <th>Created At</th> -->
                         <th>Action</th>
                         <th>Ejercicio</th>
                     </tr>
                     </thead>
-
-
-                    
                     <tbody>
                     {% for student in students %}
                     <tr>
-                        <!-- <td>{{ student.id }}</td> -->
+                        <td>{{ student.id }}</td>
                         <td class="editable" data-type="name">{{ student.name }}</td>
                         <td class="editable" data-type="curso">{{ student.curso }}</td>
                         <td class="editable" data-type="colegio">{{ student.colegio }}</td>
@@ -61,17 +59,19 @@
                         <td class="editable" data-type="medicacion">{{ student.medicacion }}</td>
                         <td class="editable" data-type="sintomas_nocturnos">{{ student.sintomas_nocturnos }}</td>
                         <td class="editable" data-type="ataques">{{ student.ataques }}</td>
-                        <td>{{ student.created_at }}</td>
+                        <!-- <td>{{ student.created_at }}</td> -->
                         <td class="btn-td-block"><button class="btn btn-block btn-delete btn-danger">DELETE</button></td>
-                        <td><a href="exercises/{{student.id}}" class="btn btn-success">Crear Rutina</a></td>
+                        <td><a href="/exercises/{{student.id}}" class="btn btn-success" id="rutina_btn">Crear Rutina</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
+            
         </div>
     </div>
 </div>
+<td><a href="logout/" class="btn btn-success" >Cerrar Sesión</a></td>
 <!-- Modal -->
 <div id="insert_data" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -86,58 +86,50 @@
       <div class="modal-body">
 
           <div class="form-group">
-              <label>Nombre : </label>
-              <input type="text" name="name" id="ins_name" class="form-control" placeholder="Nombre">
+              <label>Name : </label>
+              <input type="text" name="name" id="ins_name" class="form-control" placeholder="Nombre del estudiante">
           </div>
           <div class="form-group">
               <label>Curso : </label>
-              <input type="text" name="curso" id="ins_curso" class="form-control" placeholder="Curso">
+              <input type="text" name="curso" id="ins_curso" class="form-control" placeholder="Curso del estudiante">
           </div>
           <div class="form-group">
             <label>Establecimiento : </label>
-            <input type="text" name="colegio id="ins_oolegio" class="form-control" placeholder="Establecimiento">
+            <input type="text" name="colegio" id="ins_colegio" class="form-control" placeholder="Establecimiento del estudiante">
         </div>
+            <div class="form-group">
+                <label>Sintomas Diurnos : </label>
+                <select name="sintomas_diurnos" class="form-control" id="ins_sintomas_diurnos">
+                    <option>Menos de 2 veces/semana</option>
+                    <option>Más de 2 veces/semana</option>
+                    <option>Al menos una vez al día</option>
+                    <option>Varias veces al día</option>
+                </select>
+                <div class="form-group">
+                    <label>Medicación : </label>
+                    <select name="medicacion" class="form-control" id="ins_medicacion">
+                        <option>Menos de 2 veces/semana</option>
+                        <option>Más de 2 veces/semana</option>
+                        <option>Al menos una vez al día</option>
+                        <option>Varias veces al día</option>
+                    </select>
 
-           <div class="form-group">
-              <label>Síntomas Diurnos (veces/semana): </label>
-              <select name="sintomas_diurnos" class="form-control" id="ins_sintomas_diurnos">
-                  <option>Menos de 2 veces/semana</option>
-                  <option>Más de 2 veces/semana</option>
-                  <option>Al menos una vez al día</option>
-                  <option>Varias veces al día</option>
-              </select>
-          </div>
-
-          <div class="form-group">
-            <label>Medicación (veces/semana): </label>
-            <select name="medicacion" class="form-control" id="ins_medicacion">
-                <option>Menos de 2 veces/semana</option>
-                <option>Más de 2 veces/semana</option>
-                <option>Al menos una vez al día</option>
-                <option>Varias veces al día</option>
-            </select>
+                    <div class="form-group">
+                        <label>Síntomas Nocturnos: </label>
+                        <select name="sintomas_nocturnos" class="form-control" id="ins_sintomas_nocturnos">
+                            <option>Menos de 2 veces/mes</option>
+                            <option>Más de 2 veces/mes</option>
+                            <option>Más de una vez/semana</option>
+                            <option>Frecuentemente</option>
+                        </select>
+                        <div class="form-group">
+                            <label>Ataques de Asma : </label>
+                            <select name="ataques" class="form-control" id="ins_ataques">
+                                <option>Nunca</option>
+                                <option>Menos de una vez/año</option>
+                                <option>Más de dos veces/año</option>
+                            </select>
         </div>
-
-        <div class="form-group">
-            <label>Síntomas Nocturnos (veces/semana): </label>
-            <select name="sintomas_nocturnos" class="form-control" id="ins_sintomas_nocturnos">
-                <option>Menos de 2 veces/mes</option>
-                <option>Más de 2 veces/mes</option>
-                <option>Más de una vez/semana</option>
-                <option>Frecuentemente</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Ataques de Asma (veces/semana): </label>
-            <select name="ataques" class="form-control" id="ins_ataques">
-                <option>Nunca</option>
-                <option>Menos de una vez/año</option>
-                <option>Más de dos veces/año</option>
-            </select>
-        </div>
-
-
           <div class="form-group">
               <input type="button" name="submit" class="btn btn-block btn-info btn-insert-data" value="INSERT STUDENT">
           </div>
@@ -162,24 +154,24 @@
     $(".btn-insert-data").click(function(){
 
         var name=$("#ins_name").val();
-        var email=$("#ins_curso").val();
+        var curso=$("#ins_curso").val();
         var colegio=$("#ins_colegio").val();
         var sintomas_diurnos=$("#ins_sintomas_diurnos").val();
         var medicacion=$("#ins_medicacion").val();
-        var sintomas_nocturnos=$("#ins_sintomas_diurnos").val();
+        var sintomas_nocturnos=$("#ins_sintomas_nocturnos").val();
         var ataques=$("#ins_ataques").val();
         if(name==""){
-            $("#ins_error").text("Por favor Ingrese un Nombre")
+            $("#ins_error").text("Por favor Introduzca el Nombre")
             $("#ins_error").show()
             return;
         }
         else if(curso==""){
-            $("#ins_error").text("Por favor Ingrese un Curso")
+            $("#ins_error").text("Por favor Introduzca el Curso")
             $("#ins_error").show()
             return;
         }
         else if(colegio==""){
-            $("#ins_error").text("Por favor Ingrese un Establecimiento")
+            $("#ins_error").text("Por favor Introduzca el Establecimiento")
             $("#ins_error").show()
             return;
         }
@@ -196,7 +188,7 @@
                     $("#ins_error").hide();
                     $("#ins_success").text(response['errorMessage']);
                     $("#ins_success").show();
-                    var html_data="<tr><td>"+response['id']+"</td><td class='editable' data-type='name'>"+name+"</td><td class='editable' data-type='curso'>"+curso+"</td><td class='editable' data-type='colegio'>"+colegio+"</td><td class='editable' data-type='sintomas_diurnos'>"+sintomas_diurnos+"</td><td class='editable' data-type='medicacion'>"+medicacion+"</td><td class='editable' data-type='sintomas_nocturnos'>"+sintomas_nocturnos+"</td><td class='editable' data-type='ataques'>"+ataques+"</td><td>"+response['created_at']+"</td><td class='btn-td-block'><button class='btn btn-block btn-delete btn-danger'>DELETE</button></td></tr>";
+                    var html_data="<tr><td>"+response['id']+"</td><td class='editable' data-type='name'>"+name+"</td><td class='editable' data-type= 'curso'>"+curso+"</td><td class='editable' data-type= 'colegio'>"+colegio+"</td><td class='editable' data-type='sintomas_diurnos'>"+sintomas_diurnos+"</td><td class='editable' data-type='medicacion'>"+medicacion+"</td><td class='editable' data-type='sintomas_nocturnos'>"+sintomas_nocturnos+"</td><td class='editable' data-type='ataques'>"+ataques+"</td><td class='btn-td-block'><button class='btn btn-block btn-delete btn-danger'>DELETE</button></td><td><a href='/exercises/{{student.id}}' class= 'btn btn-success' id='rutina_btn'>Crear Rutina</a></td>";
                     $(".table tbody").append(html_data);
                 }
                 else{
@@ -220,13 +212,14 @@
     $("#update_btn").click(function(){
             $("#update_btn").hide();
             $("#save_all_btn").show();
+            $("#rutina_btn").show();
 
        $(".editable").each(function(){
            var value=$(this).text();
            var types=$(this).data('type');
-           if(types!='sintomas_diurnos' && types!='medicacion' && types!= 'sintomas_nocturnos' && types!= 'ataques'){
+           if(types!='sintomas_diurnos' && types!='medicacion' && types!='sintomas_nocturnos' && types!='ataques'){
                 var html_data="<input type='text' name='"+types+"'  class='form-control input_"+types+" input_data' value='"+value+"'>";
-                $(this).html(html_data);
+                $(this).html(html_data);    
            }
            else if (types=='sintomas_diurnos'){
                 var html_data="<select name='"+types+"'  class='form-control input_"+types+" input_data'>";
@@ -293,8 +286,10 @@
                 html_data+="</select>";
                 $(this).html(html_data);
            }
+
         });
     });
+    
 
     $("#save_all_btn").click(function(){
         $("#save_all_btn").attr("disabled","disabled");
@@ -308,16 +303,15 @@
                 $(this).remove();
          });
         $("tbody tr").each(function(){
-            // var id=$(this).children().eq(0).text()
-             var name=$(this).children().eq(0).text()
-             var curso=$(this).children().eq(1).text()
-             var colegio=$(this).children().eq(2).text()
-             var sintomas_diurnos=$(this).children().eq(3).text()
-             var medicacion=$(this).children().eq(4).text()
-             var sintomas_nocturnos=$(this).children().eq(5).text()
-             var ataques=$(this).children().eq(6).text()
-
-             var single_data={"name":name,"curso":curso,"colegio":colegio,"sintomas_diurnos":sintomas_diurnos,"medicacion":medicacion,"sintomas_nocturnos":sintomas_nocturnos,"ataques":ataques};
+             var id=$(this).children().eq(0).text()
+             var name=$(this).children().eq(1).text()
+             var curso=$(this).children().eq(2).text()
+             var colegio=$(this).children().eq(3).text()
+             var sintomas_diurnos=$(this).children().eq(4).text()
+             var medicacion=$(this).children().eq(5).text()
+             var sintomas_nocturnos=$(this).children().eq(6).text()
+             var ataques=$(this).children().eq(7).text()
+             var single_data={"id":id,"name":name,"curso":curso,'colegio':colegio,'sintomas_diurnos':sintomas_diurnos,'medicacion':medicacion,'sintomas_nocturnos':sintomas_nocturnos,'ataques':ataques};
              json_data.push(single_data);
         });
 
@@ -351,7 +345,7 @@
                  $("#update_btn").show();
                  $("#save_all_btn").hide();
             })
-
+            <td><a href="\logout" class="btn btn-success" id="rutina_btn">Cerrar Sesión</a></td>
     });
 
     $(document).on("click",".btn-delete",function(){
@@ -359,7 +353,7 @@
             this_html.attr("disabled","disabled");
             this_html.text("DELETING....");
             var id=this_html.parent().parent().children().first().text();
-            //console.log(id);
+            console.log(id);
             $.ajax({
                 url:'{% url 'delete_data' %}',
                 type:'POST',
@@ -386,5 +380,6 @@
             });
     });
 </script>
+
 </body>
 </html>
