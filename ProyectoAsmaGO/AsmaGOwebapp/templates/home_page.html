@@ -17,6 +17,7 @@
         <div class="col-lg-6">
             <button class="btn btn-block btn-success" id="update_btn">EDIT ALL</button>
             <button class="btn btn-block btn-success" id="save_all_btn" style="display:none;margin-top:0px">SAVE ALL</button>
+            
         </div>
     </div>
     <div class="row">
@@ -61,15 +62,18 @@
                         <td class="editable" data-type="ataques">{{ student.ataques }}</td>
                         <!-- <td>{{ student.created_at }}</td> -->
                         <td class="btn-td-block"><button class="btn btn-block btn-delete btn-danger">DELETE</button></td>
-                        <td><a href="exercises/{{student.id}}" class="btn btn-success" id="rutina_btn">Crear Rutina</a></td>
+                        <td><a href="exercises/{{student.id}}/" class="btn btn-success" id="rutina_btn">Crear Rutina</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+                <a href="/logout/" class="btn btn-success" >Cerrar Sesión</a>
             </div>
         </div>
     </div>
 </div>
+
+
 <!-- Modal -->
 <div id="insert_data" class="modal fade" role="dialog">
   <div class="modal-dialog">
