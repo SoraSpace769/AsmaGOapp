@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from AsmaGOwebapp.models import StudentData
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
@@ -14,11 +15,11 @@ from django.contrib.auth.decorators import login_required
 def IndexPageController(request):
     return HttpResponseRedirect("/homePage")
 
-@login_required(login_url='/login_user/')
+# @login_required(login_url='/login_user/')
 def HomePage(request):
     return render(request,"home_page.html")
 
-
+@csrf_exempt
 def InsertStudent(request):
     name=request.POST.get("name")
     curso=request.POST.get("curso")
@@ -35,7 +36,7 @@ def InsertStudent(request):
     except:
         stuent_data={"error":True,"errorMessage":"Failed to Add Student"}
         return JsonResponse(stuent_data,safe=False)
-
+@csrf_exempt
 def update_all(request):
     data=request.POST.get("data")
     dict_data=json.loads(data)
@@ -56,7 +57,7 @@ def update_all(request):
         stuent_data={"error":True,"errorMessage":"Failed to Update Data"}
         return JsonResponse(stuent_data,safe=False)
 
-
+@csrf_exempt
 def delete_data(request):
     id=request.POST.get("id")
     try:
@@ -69,7 +70,7 @@ def delete_data(request):
         return JsonResponse(stuent_data,safe=False)
 
 
-@login_required(login_url='/login_user/')
+# @login_required(login_url='/login_user/')
 def exercises(request,student_id):
     student=StudentData.objects.get(id=student_id)
     

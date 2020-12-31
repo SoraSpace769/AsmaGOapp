@@ -6,6 +6,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from AsmaGOwebapp import views
 from ProyectoAsmaGO import settings
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
